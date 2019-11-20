@@ -40,12 +40,14 @@ export const createdUser = response => ({
 export const fetchShirts = () => {
   return dispatch => {
     dispatch(requestShirts());
-    return fetch("http://localhost:9001")
+    return fetch("http://localhost:9001/shirts")
       .then(response => response.json())
-      .then(
-        json => dispatch(requestShirtsSuccess(json)),
-        error => dispatch(requestShirtsFailure(error))
-      );
+      .then(json => dispatch(requestShirtsSuccess(json)))
+      .catch(error => {
+        console.log("loading", error);
+        dispatch(requestShirtsFailure(error));
+      });
+    //=> dispatch(requestShirtsFailure(error)));
   };
 };
 
